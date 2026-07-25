@@ -9,9 +9,6 @@ NudgeFlow is a multi-modal, GenAI-powered Progressive Web App (PWA) designed to 
 
 ## Key Features
 
-- **Installable PWA (Add to Home Screen):** Quick one-tap access directly from your home screen. Bypasses the browser chrome and launches straight into the panic flow without requiring you to type a URL.
-- **Zero-Friction SOS Interface:** A large, single-tap panic button serves as the immediate entry point for high-stress moments. No login walls, no complex menus, and absolutely zero typing required.
-- **Actionable Web Push Notifications:** Receive and interact with alerts (e.g., "I'm okay" or "Get help now") directly from your device's notification center without needing to open the app.
 - **Sobriety Tracker & Financial Calculator:** Stay motivated by tracking your exact clean days and hours. The tracker automatically calculates the money you've saved during your sobriety journey.
 - **Simulated Craving Spike Flow:** Hit SOS to trigger a zero-typing sequence: an audio-guided breathing exercise followed by a personalized GenAI de-escalation script read aloud via Web Speech, alongside a one-tap button to alert your support contact.
 - **Habit Builder:** Cultivate healthier routines. Replace addiction triggers with positive daily self-care and recovery habits, while tracking your success streaks.
