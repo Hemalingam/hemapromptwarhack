@@ -48,6 +48,7 @@ class BurnoutCheck {
       
       // Clean up markdown block if present
       aiResponse = aiResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+      console.log("[DEBUG] Burnout AI Raw Response:", aiResponse);
       
       this.questions = JSON.parse(aiResponse);
       
@@ -55,7 +56,7 @@ class BurnoutCheck {
         throw new Error("Invalid format");
       }
     } catch (e) {
-      console.error("AI Generation Failed, using fallback questions", e);
+      console.error("AI Generation Failed, using fallback questions. Error details:", e);
       this.questions = [
         "Have you felt physically or emotionally exhausted in the past week?",
         "Do you feel like you are sacrificing your own needs for your loved one?",
