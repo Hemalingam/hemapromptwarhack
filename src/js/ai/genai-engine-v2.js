@@ -75,7 +75,7 @@ class GenAIEngine {
    */
   async answerClinicalQuery(query) {
     const q = query.toLowerCase();
-    const apiKey = 'AQ.Ab8RN6IKntPtdGGn9rNDRcw2-r-mRy3hXiep6N8B1r4yN6ie0w';
+    const apiKey = 'AQ.Ab8RN6K2NRDi6OWC29wrPyZ6rrbyuFjYc0wOmBOg-usokoPK2Q';
 
     // Hardcoded Crisis Guardrail
     if (q.includes('suicide') || q.includes('end my life') || q.includes('want to die') || q.includes('overdose')) {
