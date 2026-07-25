@@ -2,7 +2,7 @@
 # NudgeFlow: Recovery & Prevention Platform
 
 <p align="center">
-  <img src="[./assets/app-icon.png](https://github.com/Hemalingam/hemapromptwarhack/blob/main/Gemini_Generated_Image_mooc8amooc8amooc.png)" alt="NudgeFlow App Icon" width="200"/>
+  <img src="https://github.com/Hemalingam/hemapromptwarhack/blob/main/Gemini_Generated_Image_mooc8amooc8amooc.png" alt="NudgeFlow App Icon" width="200"/>
 </p>
 
 NudgeFlow is a multi-modal, GenAI-powered Progressive Web App (PWA) designed to support individuals navigating substance use disorders and their caregivers. Built specifically for moments of high cognitive load and distress, the platform provides immediate zero-typing interventions, personalized crisis de-escalation, and contextual safety tools.
