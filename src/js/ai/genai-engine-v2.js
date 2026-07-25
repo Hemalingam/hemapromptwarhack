@@ -75,7 +75,7 @@ class GenAIEngine {
    */
   async answerClinicalQuery(query) {
     const q = query.toLowerCase();
-    const apiKey = 'AQ.Ab8RN6JIPgn1NN9SXljn4ALbp7VERK-MpICNfOGaUXIDlK6kfQ';
+    const apiKey = 'AQ.Ab8RN6IKntPtdGGn9rNDRcw2-r-mRy3hXiep6N8B1r4yN6ie0w';
 
     // Hardcoded Crisis Guardrail
     if (q.includes('suicide') || q.includes('end my life') || q.includes('want to die') || q.includes('overdose')) {
@@ -99,7 +99,7 @@ class GenAIEngine {
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
