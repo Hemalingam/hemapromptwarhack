@@ -1,0 +1,354 @@
+/* Emergency Crisis SOS Overlay & High Cognitive Load Styles */
+
+.sos-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeInModal 0.25s ease-out;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.sos-modal-container {
+  width: 100%;
+  max-width: 600px;
+  background: linear-gradient(180deg, #1E1B4B, #0F172A);
+  border: 2px solid var(--accent-red);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);
+}
+
+.sos-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.sos-badge {
+  background: var(--accent-red);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  animation: flashRed 1.5s infinite alternate;
+}
+
+@keyframes flashRed {
+  0% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(239, 68, 68, 1); }
+}
+
+.sos-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sos-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sos-main-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.sos-sub-title {
+  color: #CBD5E1;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sos-big-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 500px) {
+  .sos-big-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sos-big-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem;
+  border-radius: 16px;
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+}
+
+.sos-big-btn .icon {
+  font-size: 2rem;
+}
+
+.sos-big-btn .text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sos-big-btn .title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.sos-big-btn .sub {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sos-big-btn.call-988 {
+  background: linear-gradient(135deg, #DC2626, #991B1B);
+  border-color: #FCA5A5;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.sos-big-btn.text-988 {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  border-color: #93C5FD;
+}
+
+.sos-big-btn.audio-calm {
+  background: linear-gradient(135deg, #059669, #047857);
+  border-color: #6EE7B7;
+}
+
+.sos-big-btn.narcan-alert {
+  background: linear-gradient(135deg, #D97706, #B45309);
+  border-color: #FDE68A;
+}
+
+.sos-big-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.15);
+}
+
+/* Emergency Links & Direct Dial Buttons */
+.emergency-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-fast);
+}
+
+.emergency-link-btn.primary-red {
+  background: linear-gradient(135deg, #EF4444, #B91C1C);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+}
+
+.emergency-link-btn.secondary-red {
+  background: var(--bg-dark);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #FCA5A5;
+}
+
+.emergency-link-btn.tertiary-amber {
+  background: var(--bg-dark);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  color: #FDE68A;
+  width: 100%;
+}
+
+.emergency-link-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Naloxone (Narcan) Emergency Visual Guide Cards */
+.narcan-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 600px) {
+  .narcan-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .narcan-steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.narcan-step-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.1rem;
+  position: relative;
+  transition: var(--transition-fast);
+}
+
+.narcan-step-card.highlight {
+  border-color: var(--accent-amber);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.1), var(--bg-dark));
+  box-shadow: 0 0 15px var(--accent-amber-glow);
+}
+
+.step-num {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--accent-emerald-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.step-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.narcan-step-card h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.narcan-step-card p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Emergency Script Display */
+.script-display-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: var(--bg-dark);
+  border: 1px solid var(--accent-blue);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.script-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.script-box-header .tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #93C5FD;
+  background: rgba(59, 130, 246, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.icon-btn-sm {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.script-content {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* PWA Toast Banner */
+.pwa-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 1rem;
+  right: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-emerald);
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  z-index: 200;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pwa-toast-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.btn-primary-sm {
+  background: var(--accent-emerald);
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pwa-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+}

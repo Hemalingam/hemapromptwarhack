@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NudgeFlow | SUD Recovery</title>
+  
+  <link rel="icon" type="image/png" href="./assets/app-icon.png">
+  <link rel="manifest" href="./manifest.json">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./src/css/main.css">
+  <link rel="stylesheet" href="./src/css/components.css">
+  <link rel="stylesheet" href="./src/css/emergency.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Global App Shell -->
+  <div class="app-container">
+    
+    <!-- 1. TOP PWA APP BAR -->
+    <header class="app-header glass-panel">
+      <div class="header-left">
+        <div class="app-logo">
+          <div class="brand-text">
+            <span class="brand-title" style="font-size: 1.25rem;">NudgeFlow</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <span class="badge-tag" style="margin:0; padding:0.2rem 0.6rem; font-size:0.75rem; background: rgba(255,255,255,0.1); color: var(--text-muted); border: none;">Guest Mode</span>
+      </div>
+
+      <div class="header-right">
+        <!-- India Help Header Button -->
+        <button id="india-help-trigger" class="icon-btn-text" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border-radius: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4); color: var(--accent-red); font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+          <i data-lucide="shield-plus" style="width:16px; height:16px; stroke-width:2.5px;"></i>
+          Click to call
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Body Content -->
+    <main id="main-content" class="main-content" style="padding-top: 70px; padding-bottom: 90px;">
+      
+      <!-- TAB 1: CRISIS (Default View) -->
+      <section id="tab-crisis" class="tab-page active">
+        
+        <!-- 2. HERO / PANIC LANDING ZONE -->
+        <div class="hero-sos-zone">
+          <button id="hero-sos-trigger" class="hero-sos-btn">
+            <div class="sos-pulse-rings">
+              <div class="ring ring-1"></div>
+              <div class="ring ring-2"></div>
+            </div>
+            <div class="sos-btn-content">
+              <i data-lucide="siren" style="width:56px;height:56px; margin-bottom: 0.5rem; color: #fff;"></i>
+              <span class="sos-btn-title">Emergency SOS</span>
+              <span class="sos-btn-subtitle">I Need Help Now</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Immediate Crisis Bar -->
+        <div class="crisis-quick-bar">
+          <a href="tel:14446" class="crisis-quick-btn red-alert">
+            <i data-lucide="phone"></i> 14446 (India)
+          </a>
+          <a href="tel:988" class="crisis-quick-btn amber-alert">
+            <i data-lucide="phone-call"></i> 988 (Global)
+          </a>
+        </div>
+
+        <!-- 3. ZERO-TYPING INTERVENTION TABS -->
+        <div class="zero-typing-grid">
+          <button class="zt-pill-card breathe-pill" onclick="document.getElementById('nav-journey').click()">
+            <div class="pill-icon"><i data-lucide="wind"></i></div>
+            <div class="pill-text">Guide My Breathing</div>
+          </button>
+          <button class="zt-pill-card talk-pill" onclick="document.getElementById('nav-ai').click()">
+            <div class="pill-icon"><i data-lucide="mic"></i></div>
+            <div class="pill-text">Talk To Me</div>
+          </button>
+          <button class="zt-pill-card alert-pill">
+            <div class="pill-icon"><i data-lucide="send"></i></div>
+            <div class="pill-text">Alert Caregiver (Silent)</div>
+          </button>
+          <button class="zt-pill-card naloxone-pill" onclick="document.getElementById('nav-help').click()">
+            <div class="pill-icon"><i data-lucide="map-pin"></i></div>
+            <div class="pill-text">Find Naloxone Near Me</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- TAB 2: MY JOURNEY (Secondary Dashboard) -->
+      <section id="tab-journey" class="tab-page">
+        <div class="page-intro">
+          <h2>Your Journey</h2>
+          <p>Track your clean days, habits, and utilize safety tools.</p>
+        </div>
+
+        <!-- Recovery Tracker Widget -->
+        <div class="card tracker-card">
+          <div class="tracker-stats-grid">
+            <div class="stat-box">
+              <span class="stat-value">14</span>
+              <span class="stat-label">Days Sober</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-value">336</span>
+              <span class="stat-label">Hours</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-value">$120</span>
+              <span class="stat-label">Saved</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Breathing (Moved here from old layout) -->
+        <div class="card breathing-quick-card margin-top">
+          <div class="card-header">
+            <h3>Visual Pace Breathing</h3>
+            <div class="breath-mode-selector">
+              <button class="mode-chip active" data-mode="box">Box</button>
+              <button class="mode-chip" data-mode="calm">Calm</button>
+            </div>
+          </div>
+          <div class="breathing-widget-body">
+            <div id="breath-circle" class="breath-circle">
+              <div class="breath-inner-ring"></div>
+              <span id="breath-instruction" class="breath-instruction">Tap to Start</span>
+              <span id="breath-timer" class="breath-timer">0.0s</span>
+            </div>
+            <div class="breath-controls">
+              <button id="toggle-breath-btn" class="btn-primary" style="height: 56px;">Start Session</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: AI GUIDE (Educational Assistant) -->
+      <section id="tab-ai-guide" class="tab-page">
+        <div class="page-intro">
+          <h2>Clinical AI Assistant</h2>
+          <p>Ask anything about recovery. Grounded in clinical science.</p>
+        </div>
+
+        <div class="card rag-chatbot-card">
+          <div class="rag-chat-body">
+            <div class="rag-input-wrapper" style="position:relative;">
+              <input type="text" id="rag-query-input" class="form-select" placeholder="Ask anything about recovery..." style="padding-left: 2.8rem; height: 56px; font-size: 1rem;">
+              <i data-lucide="search" style="position:absolute; left: 1rem; top: 18px; color: var(--text-muted); width: 20px; height: 20px;"></i>
+            </div>
+            <div class="rag-chips" style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+              <button class="mode-chip">How to manage a craving?</button>
+              <button class="mode-chip">What is MAT?</button>
+              <button class="mode-chip">Setting boundaries</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card voice-express-card margin-top">
+          <div class="card-header">
+             <h3>Express by Voice</h3>
+             <p>Tap the mic and speak. AI will analyze and guide.</p>
+          </div>
+          <div class="voice-hero-zone" style="min-height: 200px;">
+            <button id="mic-main-btn" class="mic-hero-btn">
+              <div class="mic-icon-wrapper">
+                <i data-lucide="mic" style="width:36px; height:36px;"></i>
+              </div>
+              <span class="mic-status-label">Tap to Speak</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      <!-- TAB 4: PEER SUPPORT -->
+      <section id="tab-peer" class="tab-page">
+        <div class="page-intro">
+          <h2>Peer Community & Caregivers</h2>
+          <p>You are not alone in this journey.</p>
+        </div>
+
+        <!-- Caregiver View Switcher -->
+        <div class="card caregiver-switcher-card">
+           <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+             <h3 style="margin:0;">Caregiver Dashboard</h3>
+             <button class="btn-secondary" style="height:44px; padding: 0 1rem;">Switch View</button>
+           </div>
+        </div>
+
+        <div class="card peer-forum-card margin-top">
+          <div class="card-header">
+            <h3>Anonymous Peer Forum</h3>
+          </div>
+          <div class="peer-post-input-box" style="display:flex; flex-direction:column; gap:0.5rem;">
+            <textarea id="peer-post-input" class="form-textarea" placeholder="Share a win or encouraging thought..." style="min-height:100px;"></textarea>
+            <button class="btn-primary" style="height: 56px;">Post to Community</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: HELP NEAR ME -->
+      <section id="tab-help" class="tab-page">
+        <div class="page-intro">
+          <h2>Help Near Me</h2>
+          <p>Local de-addiction centers and Narcan guides.</p>
+        </div>
+        
+        <!-- Narcan Guide from Old Layout -->
+        <div class="card narcan-guide-card">
+          <div class="card-header">
+            <h3>Naloxone (Narcan) Visual Guide</h3>
+          </div>
+          <div class="narcan-steps-grid" style="display:grid; grid-template-columns: 1fr; gap:0.5rem;">
+            <div class="narcan-step-card" style="display:flex; align-items:center; gap:1rem; padding:1rem; background:var(--bg-dark); border-radius:12px;">
+              <i data-lucide="eye" style="color:var(--accent-emerald);"></i> <span><b>Step 1:</b> Check for Overdose</span>
+            </div>
+            <div class="narcan-step-card" style="display:flex; align-items:center; gap:1rem; padding:1rem; background:var(--bg-dark); border-radius:12px;">
+              <i data-lucide="phone" style="color:var(--accent-red);"></i> <span><b>Step 2:</b> Call 911 / 112 Immediately</span>
+            </div>
+            <div class="narcan-step-card" style="display:flex; align-items:center; gap:1rem; padding:1rem; background:rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-red); border-radius:12px;">
+              <i data-lucide="syringe" style="color:var(--accent-red);"></i> <span><b>Step 3:</b> Administer Naloxone</span>
+            </div>
+            <div class="narcan-step-card" style="display:flex; align-items:center; gap:1rem; padding:1rem; background:var(--bg-dark); border-radius:12px;">
+              <i data-lucide="refresh-cw" style="color:var(--accent-blue);"></i> <span><b>Step 4:</b> Rescue Breathing & Position</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card directory-main-card margin-top">
+           <div class="card-header">
+             <h3>India Treatment Directory</h3>
+           </div>
+           <div class="card-body">
+             <button class="btn-primary full-width" style="height: 56px; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+               <i data-lucide="map"></i> Open Map / Directory
+             </button>
+           </div>
+        </div>
+      </section>
+
+      <!-- 6. FOOTER DISCLAIMER -->
+      <footer class="app-disclaimer-footer" style="margin-top: 2rem;">
+        <div class="disclaimer-content" style="display:flex; gap:1rem; align-items:flex-start; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius:12px;">
+          <span class="disclaimer-icon"><i data-lucide="scale" style="color:var(--text-muted);"></i></span>
+          <p class="disclaimer-text" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin:0;">
+            <strong>Mandatory Medical Disclaimer:</strong> Using apps for addiction recovery support can never replace treatment by a licensed mental healthcare provider. NudgeFlow provides supplementary support, crisis guidance, and habit-tracking tools between clinical sessions.
+          </p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- FULLSCREEN EMERGENCY OVERLAY -->
+    <div id="sos-modal-overlay" class="sos-modal-overlay hidden">
+      <div class="sos-modal-container">
+        <div class="sos-modal-header">
+          <div class="sos-badge">EMERGENCY MODE ACTIVATED</div>
+          <button id="close-sos-modal-btn" class="sos-close-btn">&times;</button>
+        </div>
+        <div class="sos-modal-body">
+          <h2 class="sos-main-title">Breathe. You are not alone.</h2>
+          <p class="sos-sub-title">1-Tap emergency interventions below. Zero typing required.</p>
+          <div class="sos-big-grid">
+            <a href="tel:14446" class="sos-big-btn call-988">
+              <span class="icon"><i data-lucide="phone"></i></span>
+              <div class="text">
+                <span class="title">Call 14446 Tele-MANAS</span>
+              </div>
+            </a>
+            <button id="sos-calm-audio-btn" class="sos-big-btn audio-calm">
+              <span class="icon"><i data-lucide="volume-2"></i></span>
+              <div class="text">
+                <span class="title">Play AI Calming Voice</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. BOTTOM NAVIGATION BAR -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="tab-crisis">
+        <i data-lucide="siren" style="width:24px; height:24px;"></i>
+        <span>Crisis</span>
+      </button>
+      <button id="nav-journey" class="nav-item" data-tab="tab-journey">
+        <i data-lucide="trending-up" style="width:24px; height:24px;"></i>
+        <span>My Journey</span>
+      </button>
+      <button id="nav-ai" class="nav-item" data-tab="tab-ai-guide">
+        <i data-lucide="bot" style="width:24px; height:24px;"></i>
+        <span>AI Guide</span>
+      </button>
+      <button class="nav-item" data-tab="tab-peer">
+        <i data-lucide="users" style="width:24px; height:24px;"></i>
+        <span>Peer Support</span>
+      </button>
+      <button id="nav-help" class="nav-item" data-tab="tab-help">
+        <i data-lucide="map-pin" style="width:24px; height:24px;"></i>
+        <span>Help Near Me</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./src/js/utils/storage.js"></script>
+  <script src="./src/js/utils/audio-fx.js"></script>
+  <script src="./src/js/ai/genai-engine.js"></script>
+  <script src="./src/js/ai/voice-engine.js"></script>
+  <script src="./src/js/ai/crisis-ai.js"></script>
+  <script src="./src/js/components/ZeroTypingWheel.js"></script>
+  <script src="./src/js/components/BreathingCircle.js"></script>
+  <script src="./src/js/components/EmergencySOS.js"></script>
+  <script src="./src/js/components/SobrietyTracker.js"></script>
+  <script src="./src/js/components/HabitTracker.js"></script>
+  <script src="./src/js/components/PeerSupport.js"></script>
+  <script src="./src/js/components/IndiaDirectory.js"></script>
+  <script src="./src/js/components/VoiceJournal.js"></script>
+  <script src="./src/js/components/SafetyCheckin.js"></script>
+  <script src="./src/js/components/CaregiverCoach.js"></script>
+  <script src="./src/js/components/EducationHub.js"></script>
+  <script src="./src/js/app.js"></script>
+
+  <!-- India Help Modal Popup -->
+  <div id="india-help-modal" class="sos-modal-overlay hidden" style="z-index: 2000; align-items: flex-start; padding-top: 2rem;">
+    <div class="sos-modal-container" style="max-height: 90vh; overflow-y: auto; background: var(--bg-card); border-color: var(--accent-blue);">
+      <div class="sos-modal-header" style="position: sticky; top: -1.5rem; background: var(--bg-card); padding-top: 1.5rem; padding-bottom: 0.5rem; z-index: 10; border-bottom: 1px solid var(--border-color); margin-top: -1.5rem; margin-bottom: 1.25rem;">
+        <span class="sos-badge" style="background: var(--accent-blue); animation: none; color: #fff;">🇮🇳 India Helplines</span>
+        <button id="close-india-help" class="sos-close-btn" style="background: rgba(255,255,255,0.15); color: var(--text-primary);">&times;</button>
+      </div>
+      
+      <h2 class="sos-main-title" style="color: var(--text-primary); font-size: 1.4rem;">National & Specialized Support</h2>
+      <p class="sos-sub-title" style="color: var(--text-secondary);">24/7 Government and NGO helplines for substance use disorders and mental health.</p>
+      
+      <div class="india-help-content" style="color: var(--text-primary); font-size: 0.9rem; line-height: 1.5;">
+        <h3 style="margin: 1rem 0 0.5rem; color: var(--accent-emerald);">🏛️ Government National Helplines</h3>
+        
+        <div style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+          <h4 style="margin-bottom: 0.25rem;">National Drug De-Addiction Helpline</h4>
+          <p style="font-weight: 800; color: var(--accent-emerald); font-size: 1.15rem; margin-bottom: 0.5rem;"><a href="tel:14446" style="color: inherit; text-decoration: none;">14446</a> <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">or</span> <a href="tel:1800110031" style="color: inherit; text-decoration: none;">1800-11-0031</a></p>
+          <p style="font-size: 0.8rem; color: var(--text-secondary);">Free 24/7 counselling, treatment referral, and guidance for drug/alcohol de-addiction for users and family members.</p>
+        </div>
+
+        <div style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+          <h4 style="margin-bottom: 0.25rem;">Tele-MANAS (Min. of Health)</h4>
+          <p style="font-weight: 800; color: var(--accent-emerald); font-size: 1.15rem; margin-bottom: 0.5rem;"><a href="tel:14416" style="color: inherit; text-decoration: none;">14416</a> <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">or</span> <a href="tel:18008914416" style="color: inherit; text-decoration: none;">1800-891-4416</a></p>
+          <p style="font-size: 0.8rem; color: var(--text-secondary);">24/7 comprehensive tele-mental health support, crisis counselling across all Indian states and regional languages.</p>
+        </div>
+
+        <h3 style="margin: 1rem 0 0.5rem; color: var(--accent-blue);">🏥 Medical Institutes & NGOs</h3>
+
+        <div style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+          <h4 style="margin-bottom: 0.25rem;">NIMHANS Tele-Counselling</h4>
+          <p style="font-weight: 800; color: var(--accent-blue); font-size: 1.15rem; margin-bottom: 0.5rem;"><a href="tel:08046110007" style="color: inherit; text-decoration: none;">080-46110007</a></p>
+          <p style="font-size: 0.8rem; color: var(--text-secondary);">Expert clinical counselling, medical advice, and addiction treatment guidance from top specialists.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const trigger = document.getElementById('india-help-trigger');
+      const modal = document.getElementById('india-help-modal');
+      const closeBtn = document.getElementById('close-india-help');
+      
+      if(trigger && modal && closeBtn) {
+        trigger.addEventListener('click', () => modal.classList.remove('hidden'));
+        closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+      }
+    });
+  </script>
+</body>
+</html>

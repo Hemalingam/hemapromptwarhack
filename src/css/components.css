@@ -1,0 +1,296 @@
+/* Additional Styles for Sobriety Tracker, Habits, Peer Forum, India Directory & RAG Chatbot */
+
+/* Sobriety Hero Card */
+.sobriety-hero-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), var(--bg-card));
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.sobriety-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+  text-align: center;
+}
+
+.metric-box {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metric-val {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.metric-box.highlight-money .metric-val {
+  color: var(--accent-emerald-light);
+}
+
+.metric-lbl {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.sobriety-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.75rem;
+}
+
+/* Habit Tool */
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.habit-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: var(--transition-fast);
+}
+
+.habit-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.habit-check-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: none;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit-check-btn.active {
+  background: var(--accent-emerald);
+  border-color: var(--accent-emerald);
+}
+
+.habit-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.habit-category {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.habit-streak {
+  font-size: 0.78rem;
+  color: var(--accent-amber);
+  font-weight: 600;
+}
+
+/* Peer Support Forum */
+.peer-post-input-box {
+  margin-bottom: 1.25rem;
+}
+
+.peer-posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.peer-post-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.post-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-avatar {
+  font-size: 1.2rem;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.user-badge {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.2);
+  color: #93C5FD;
+  margin-left: 0.3rem;
+}
+
+.post-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.post-content {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.like-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #FCA5A5;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* India Directory */
+.directory-list-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .directory-list-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.directory-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.directory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.center-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.center-type {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.call-btn-sm {
+  background: var(--accent-emerald);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.center-address, .center-services {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 0.3rem;
+}
+
+/* Clinical RAG Chatbot */
+.rag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.rag-chip-btn {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--accent-cyan);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.rag-chip-btn:hover {
+  border-color: var(--accent-cyan);
+}
+
+.rag-answer-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: var(--bg-dark);
+  border: 1px solid var(--accent-cyan);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* Legal Medical Disclaimer Footer */
+.app-disclaimer-footer {
+  background: var(--bg-card-glass);
+  border-top: 1px solid var(--border-color);
+  padding: 1.25rem;
+  margin-top: 2rem;
+}
+
+.disclaimer-content {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.disclaimer-icon {
+  font-size: 1.25rem;
+}
+
+.disclaimer-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
