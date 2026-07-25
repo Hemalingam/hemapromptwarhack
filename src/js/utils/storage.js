@@ -1,14 +1,16 @@
 /**
- * Storage Utility - Local Encrypted Data Manager
- * Manages user profile, sobriety start date, money saved, habits, peer posts, and emergency contacts.
+ * Storage Utility - IndexedDB with Web Crypto API Encryption
+ * Compliant with 42 CFR Part 2 conceptual guidelines (local encryption).
  */
-const STORAGE_KEY = 'anchor_recovery_app_data_v1';
+const DB_NAME = 'NudgeFlowDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'secure_store';
 
 const DEFAULT_DATA = {
   profile: {
     name: 'Friend',
-    soberStartDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // Default 14 days ago
-    dailyExpense: 350, // Average daily spend on substance in INR (₹350)
+    soberStartDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    dailyExpense: 350,
     currency: '₹',
     primaryCaregiverContact: '+91-9876543210',
     caregiverName: 'Trusted Caregiver'
@@ -20,53 +22,163 @@ const DEFAULT_DATA = {
     { id: 'h4', title: 'Attend 1 Peer Support Session / Group Call', streak: 5, completedToday: false, category: 'Recovery' }
   ],
   peerPosts: [
-    { id: 'p1', author: 'SoberWarrior_IN', time: '20 mins ago', content: 'Day 30 today! Survived a high-trigger wedding event using the Anchor 1-tap breathing tool. Staying strong.', likes: 14, badge: '30 Days Sober' },
-    { id: 'p2', author: 'HopeSeeker', time: '2 hours ago', content: 'Having a strong urge this evening after a long work shift. Listening to the calming voice guide right now.', likes: 8, badge: 'Day 7' },
-    { id: 'p3', author: 'CaregiverAarti', time: '5 hours ago', content: 'To all caregivers out there: setting boundaries is self-preservation, not abandonment. Sending strength.', likes: 21, badge: 'Caregiver Ally' }
+    { id: 'p1', author: 'SoberWarrior_IN', time: '20 mins ago', content: 'Day 30 today! Survived a high-trigger event. Staying strong.', likes: 14, badge: '30 Days Sober' },
+    { id: 'p2', author: 'HopeSeeker', time: '2 hours ago', content: 'Having a strong urge. Listening to the calming voice guide right now.', likes: 8, badge: 'Day 7' }
   ],
   journalEntries: [],
   safetyPlan: {
-    warningSigns: ['Increased irritability', 'Isolating from family', 'Skipping meals'],
-    copingStrategies: ['5-4-3-2-1 Grounding Game', 'Box Breathing', 'Calling Tele-MANAS 14446'],
-    safeEnvironments: ['Local park', 'Support group hall', 'Home quiet room']
+    warningSigns: ['Increased irritability', 'Isolating from family'],
+    copingStrategies: ['5-4-3-2-1 Grounding Game', 'Calling Tele-MANAS 14446'],
+    safeEnvironments: ['Local park', 'Support group hall']
   }
 };
 
 class StorageManager {
   constructor() {
-    this.data = this.loadData();
+    this.db = null;
+    this.cryptoKey = null;
+    this.data = null;
+    this.readyPromise = this.init();
   }
 
-  loadData() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return DEFAULT_DATA;
-      return JSON.parse(raw);
-    } catch (e) {
-      console.error('Error loading storage, returning defaults', e);
-      return DEFAULT_DATA;
+  async init() {
+    await this.initCrypto();
+    await this.initDB();
+    await this.loadData();
+  }
+
+  // --- CRYPTO LOGIC ---
+  async initCrypto() {
+    const rawKey = localStorage.getItem('nudgeflow_device_key');
+    if (!rawKey) {
+      // Generate new key
+      this.cryptoKey = await crypto.subtle.generateKey(
+        { name: "AES-GCM", length: 256 },
+        true,
+        ["encrypt", "decrypt"]
+      );
+      const exported = await crypto.subtle.exportKey("raw", this.cryptoKey);
+      const exportedAsString = String.fromCharCode.apply(null, new Uint8Array(exported));
+      const exportedAsBase64 = window.btoa(exportedAsString);
+      localStorage.setItem('nudgeflow_device_key', exportedAsBase64);
+    } else {
+      // Import existing key
+      const binaryString = window.atob(rawKey);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      this.cryptoKey = await crypto.subtle.importKey(
+        "raw",
+        bytes,
+        { name: "AES-GCM" },
+        true,
+        ["encrypt", "decrypt"]
+      );
     }
   }
 
-  saveData() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
-    } catch (e) {
-      console.error('Error saving to localStorage', e);
-    }
+  async encryptData(dataStr) {
+    const encoder = new TextEncoder();
+    const encoded = encoder.encode(dataStr);
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const encrypted = await crypto.subtle.encrypt(
+      { name: "AES-GCM", iv: iv },
+      this.cryptoKey,
+      encoded
+    );
+    return {
+      iv: Array.from(iv),
+      cipher: Array.from(new Uint8Array(encrypted))
+    };
   }
 
-  getProfile() {
+  async decryptData(encryptedObj) {
+    const iv = new Uint8Array(encryptedObj.iv);
+    const cipher = new Uint8Array(encryptedObj.cipher);
+    const decrypted = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: iv },
+      this.cryptoKey,
+      cipher
+    );
+    const decoder = new TextDecoder();
+    return decoder.decode(decrypted);
+  }
+
+  // --- INDEXED DB LOGIC ---
+  initDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME);
+        }
+      };
+
+      request.onsuccess = (e) => {
+        this.db = e.target.result;
+        resolve();
+      };
+
+      request.onerror = (e) => reject(e);
+    });
+  }
+
+  async loadData() {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([STORE_NAME], 'readonly');
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.get('app_state');
+
+      request.onsuccess = async () => {
+        if (request.result) {
+          try {
+            const decryptedStr = await this.decryptData(request.result);
+            this.data = JSON.parse(decryptedStr);
+          } catch (e) {
+            console.error("Decryption failed. Re-initializing.", e);
+            this.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          }
+        } else {
+          this.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        }
+        resolve();
+      };
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async saveData() {
+    const dataStr = JSON.stringify(this.data);
+    const encryptedObj = await this.encryptData(dataStr);
+    
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([STORE_NAME], 'readwrite');
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.put(encryptedObj, 'app_state');
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  // --- ASYNC API METHODS ---
+  async getProfile() {
+    await this.readyPromise;
     return this.data.profile;
   }
 
-  updateProfile(updates) {
+  async updateProfile(updates) {
+    await this.readyPromise;
     this.data.profile = { ...this.data.profile, ...updates };
-    this.saveData();
+    await this.saveData();
     return this.data.profile;
   }
 
-  getSobrietyStats() {
+  async getSobrietyStats() {
+    await this.readyPromise;
     const startDate = new Date(this.data.profile.soberStartDate);
     const now = new Date();
     const diffMs = Math.max(0, now - startDate);
@@ -88,11 +200,13 @@ class StorageManager {
     };
   }
 
-  getHabits() {
+  async getHabits() {
+    await this.readyPromise;
     return this.data.habits;
   }
 
-  toggleHabit(habitId) {
+  async toggleHabit(habitId) {
+    await this.readyPromise;
     const habit = this.data.habits.find(h => h.id === habitId);
     if (habit) {
       habit.completedToday = !habit.completedToday;
@@ -101,63 +215,64 @@ class StorageManager {
       } else {
         habit.streak = Math.max(0, habit.streak - 1);
       }
-      this.saveData();
+      await this.saveData();
     }
-    return this.data.habits;
   }
 
-  addHabit(title, category = 'Self-Care') {
-    const newHabit = {
-      id: 'h_' + Date.now(),
+  async addHabit(title, category) {
+    await this.readyPromise;
+    this.data.habits.push({
+      id: 'h' + Date.now(),
       title,
-      streak: 1,
-      completedToday: true,
-      category
-    };
-    this.data.habits.push(newHabit);
-    this.saveData();
-    return this.data.habits;
+      category,
+      streak: 0,
+      completedToday: false
+    });
+    await this.saveData();
   }
 
-  getPeerPosts() {
+  async getPeerPosts() {
+    await this.readyPromise;
     return this.data.peerPosts;
   }
 
-  addPeerPost(content, author = 'Anonymous Member') {
-    const newPost = {
-      id: 'p_' + Date.now(),
-      author,
-      time: 'Just now',
-      content,
-      likes: 1,
-      badge: 'Community Member'
-    };
-    this.data.peerPosts.unshift(newPost);
-    this.saveData();
-    return this.data.peerPosts;
-  }
-
-  likePost(postId) {
+  async likePost(postId) {
+    await this.readyPromise;
     const post = this.data.peerPosts.find(p => p.id === postId);
     if (post) {
-      post.likes += 1;
-      this.saveData();
+      post.likes = (post.likes || 0) + 1;
+      await this.saveData();
     }
-    return this.data.peerPosts;
   }
 
-  addJournalEntry(entry) {
+  async addPeerPost(content) {
+    await this.readyPromise;
+    this.data.peerPosts.unshift({
+      id: 'p' + Date.now(),
+      author: 'You',
+      time: 'Just now',
+      content,
+      likes: 0,
+      badge: 'Recovery Warrior'
+    });
+    await this.saveData();
+  }
+
+  async getJournalEntries() {
+    await this.readyPromise;
+    return this.data.journalEntries || [];
+  }
+
+  async addJournalEntry(entry) {
+    await this.readyPromise;
+    if (!this.data.journalEntries) this.data.journalEntries = [];
     this.data.journalEntries.unshift({
-      id: 'j_' + Date.now(),
-      date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      id: 'j' + Date.now(),
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       ...entry
     });
-    this.saveData();
-    return this.data.journalEntries;
-  }
-
-  getJournalEntries() {
-    return this.data.journalEntries;
+    await this.saveData();
   }
 }
 

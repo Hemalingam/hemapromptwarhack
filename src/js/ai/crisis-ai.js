@@ -74,8 +74,8 @@ class CrisisAIEngine {
   /**
    * Simulates Web Push Alert notification sent to designated Caregiver
    */
-  triggerCaregiverWebPushAlert() {
-    const profile = window.storageManager ? window.storageManager.getProfile() : { caregiverName: 'Caregiver' };
+  async triggerCaregiverWebPushAlert() {
+    const profile = window.storageManager ? await window.storageManager.getProfile() : { caregiverName: 'Caregiver' };
     
     // Web Notification API if permitted
     if ('Notification' in window && Notification.permission === 'granted') {

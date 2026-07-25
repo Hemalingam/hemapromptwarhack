@@ -10,7 +10,7 @@ class EmergencySOS {
 
   initEvents() {
     // SOS Header Trigger Pill Button
-    const sosTriggerBtn = document.getElementById('sos-trigger-btn');
+    const sosTriggerBtn = document.getElementById('hero-sos-trigger');
     const closeModalBtn = document.getElementById('close-sos-modal-btn');
     const overlay = document.getElementById('sos-modal-overlay');
 
@@ -46,8 +46,8 @@ class EmergencySOS {
     // Caregiver Web Alert Broadcast Button
     const alertBtn = document.getElementById('broadcast-contacts-btn');
     if (alertBtn) {
-      alertBtn.addEventListener('click', () => {
-        const res = window.crisisAiEngine.triggerCaregiverWebPushAlert();
+      alertBtn.addEventListener('click', async () => {
+        const res = await window.crisisAiEngine.triggerCaregiverWebPushAlert();
         alert(`🚨 ALERT DISPATCHED!\n\n${res.message}\n\nTimestamp: ${res.timestamp}\nCaregiver view receives location & emergency de-escalation script.`);
       });
     }
@@ -89,13 +89,13 @@ class EmergencySOS {
     }
   }
 
-  openSOSOverlay() {
+  async openSOSOverlay() {
     const overlay = document.getElementById('sos-modal-overlay');
     if (overlay) {
       overlay.classList.remove('hidden');
       window.audioFxEngine.playChimeTone(587, 0.8);
       // Automatically trigger caregiver web push alert on SOS activation
-      window.crisisAiEngine.triggerCaregiverWebPushAlert();
+      await window.crisisAiEngine.triggerCaregiverWebPushAlert();
     }
   }
 

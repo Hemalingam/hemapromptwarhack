@@ -69,6 +69,14 @@ class AppRouter {
   }
 
   initGlobalControls() {
+    // Home Trigger (Logo)
+    const homeTrigger = document.getElementById('home-trigger-btn');
+    if (homeTrigger) {
+      homeTrigger.addEventListener('click', () => {
+        this.switchTab('tab-crisis');
+      });
+    }
+
     // Ambient Sound Toggle
     const ambientBtn = document.getElementById('ambient-sound-btn');
     if (ambientBtn) {

@@ -24,11 +24,11 @@
 <body>
   <!-- Global App Shell -->
   <div class="app-container">
-    
     <!-- 1. TOP PWA APP BAR -->
     <header class="app-header glass-panel">
       <div class="header-left">
-        <div class="app-logo">
+        <div id="home-trigger-btn" class="app-logo" style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer;">
+          <img src="./assets/app-icon.png?v=2" alt="Logo" style="width: 36px; height: 36px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
           <div class="brand-text">
             <span class="brand-title" style="font-size: 1.25rem;">NudgeFlow</span>
           </div>
@@ -36,7 +36,7 @@
       </div>
 
       <div class="header-center">
-        <span class="badge-tag" style="margin:0; padding:0.2rem 0.6rem; font-size:0.75rem; background: rgba(255,255,255,0.1); color: var(--text-muted); border: none;">Guest Mode</span>
+        <span class="user-avatar" style="width:32px; height:32px; font-size:1rem;">👤</span>
       </div>
 
       <div class="header-right">
@@ -62,7 +62,7 @@
               <div class="ring ring-2"></div>
             </div>
             <div class="sos-btn-content">
-              <i data-lucide="siren" style="width:56px;height:56px; margin-bottom: 0.5rem; color: #fff;"></i>
+              <i data-lucide="siren" style="width:56px;height:56px; margin-bottom: 0.5rem; color: currentColor;"></i>
               <span class="sos-btn-title">Emergency SOS</span>
               <span class="sos-btn-subtitle">I Need Help Now</span>
             </div>
@@ -155,33 +155,32 @@
         </div>
 
         <div class="card rag-chatbot-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+            <h3 style="margin: 0; font-size: 1.1rem;">AI Chat</h3>
+            <button id="clear-chat-btn" class="action-btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg> Clear
+            </button>
+          </div>
           <div class="rag-chat-body">
-            <div class="rag-input-wrapper" style="position:relative;">
-              <input type="text" id="rag-query-input" class="form-select" placeholder="Ask anything about recovery..." style="padding-left: 2.8rem; height: 56px; font-size: 1rem;">
-              <i data-lucide="search" style="position:absolute; left: 1rem; top: 18px; color: var(--text-muted); width: 20px; height: 20px;"></i>
+            <div class="rag-input-wrapper" style="position:relative; display: flex; gap: 0.5rem;">
+              <div style="flex: 1; position: relative;">
+                <input type="text" id="rag-query-input" class="form-select" placeholder="Ask anything about recovery..." style="padding-left: 2.8rem; height: 56px; font-size: 1rem; width: 100%;">
+                <i data-lucide="search" style="position:absolute; left: 1rem; top: 18px; color: var(--text-muted); width: 20px; height: 20px;"></i>
+              </div>
+              <button id="rag-ask-btn" class="action-btn" style="height: 56px; padding: 0 1.5rem; background: var(--accent-emerald); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Ask</button>
             </div>
             <div class="rag-chips" style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
-              <button class="mode-chip">How to manage a craving?</button>
-              <button class="mode-chip">What is MAT?</button>
-              <button class="mode-chip">Setting boundaries</button>
+              <button class="mode-chip rag-chip-btn">How to manage a craving?</button>
+              <button class="mode-chip rag-chip-btn">What is MAT?</button>
+              <button class="mode-chip rag-chip-btn">Setting boundaries</button>
+            </div>
+            
+            <div id="rag-answer-box" class="hidden" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
             </div>
           </div>
         </div>
 
-        <div class="card voice-express-card margin-top">
-          <div class="card-header">
-             <h3>Express by Voice</h3>
-             <p>Tap the mic and speak. AI will analyze and guide.</p>
-          </div>
-          <div class="voice-hero-zone" style="min-height: 200px;">
-            <button id="mic-main-btn" class="mic-hero-btn">
-              <div class="mic-icon-wrapper">
-                <i data-lucide="mic" style="width:36px; height:36px;"></i>
-              </div>
-              <span class="mic-status-label">Tap to Speak</span>
-            </button>
-          </div>
-        </div>
+
       </section>
       
       <!-- TAB 4: PEER SUPPORT -->
@@ -191,23 +190,53 @@
           <p>You are not alone in this journey.</p>
         </div>
 
-        <!-- Caregiver View Switcher -->
-        <div class="card caregiver-switcher-card">
-           <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
-             <h3 style="margin:0;">Caregiver Dashboard</h3>
-             <button class="btn-secondary" style="height:44px; padding: 0 1rem;">Switch View</button>
-           </div>
+        <!-- Caregiver Features Dashboard -->
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+          
+          <!-- Feature 1: Patient Status -->
+          <div class="card" style="border-left: 4px solid var(--accent-emerald);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h3 style="margin-top:0; margin-bottom: 0.25rem;">Patient Status: <span style="color: var(--accent-emerald);">Checking In</span></h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0;">They logged their daily check-in 2 hours ago. Mood is Stable.</p>
+              </div>
+              <div style="background: rgba(52, 211, 153, 0.2); padding: 0.5rem; border-radius: 50%;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 2: CRAFT Training -->
+          <div class="card" style="border-left: 4px solid var(--accent-blue);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h3 style="margin-top:0; margin-bottom: 0.25rem;">CRAFT Training</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0;">Learn evidence-based strategies to communicate without enabling.</p>
+                <button class="btn-secondary" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; font-size: 0.85rem;">Start Module 1</button>
+              </div>
+              <div style="background: rgba(56, 189, 248, 0.2); padding: 0.5rem; border-radius: 50%;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 3: Burnout Check -->
+          <div class="card" style="border-left: 4px solid #f59e0b;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h3 style="margin-top:0; margin-bottom: 0.25rem;">Caregiver Burnout Check</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0;">You can't pour from an empty cup. Take 2 minutes for yourself.</p>
+                <button id="btn-burnout-check" class="btn-secondary" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; font-size: 0.85rem;">Start Assessment</button>
+              </div>
+              <div style="background: rgba(245, 158, 11, 0.2); padding: 0.5rem; border-radius: 50%;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path></svg>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="card peer-forum-card margin-top">
-          <div class="card-header">
-            <h3>Anonymous Peer Forum</h3>
-          </div>
-          <div class="peer-post-input-box" style="display:flex; flex-direction:column; gap:0.5rem;">
-            <textarea id="peer-post-input" class="form-textarea" placeholder="Share a win or encouraging thought..." style="min-height:100px;"></textarea>
-            <button class="btn-primary" style="height: 56px;">Post to Community</button>
-          </div>
-        </div>
+
       </section>
 
       <!-- TAB 5: HELP NEAR ME -->
@@ -314,12 +343,26 @@
     </nav>
   </div>
 
+  <!-- Burnout Assessment Modal -->
+  <div id="burnout-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 style="margin:0;">Burnout Check</h2>
+        <button class="close-modal" id="close-burnout-modal" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+      <div id="burnout-modal-body" class="modal-body" style="min-height: 150px; padding: 1rem 0; display:flex; flex-direction:column; gap:1rem;">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="./src/js/utils/storage.js"></script>
   <script src="./src/js/utils/audio-fx.js"></script>
-  <script src="./src/js/ai/genai-engine.js"></script>
+  <script src="./src/js/ai/genai-engine-v2.js"></script>
   <script src="./src/js/ai/voice-engine.js"></script>
   <script src="./src/js/ai/crisis-ai.js"></script>
+  <script src="./src/js/components/BurnoutCheck.js"></script>
   <script src="./src/js/components/ZeroTypingWheel.js"></script>
   <script src="./src/js/components/BreathingCircle.js"></script>
   <script src="./src/js/components/EmergencySOS.js"></script>
@@ -332,6 +375,36 @@
   <script src="./src/js/components/CaregiverCoach.js"></script>
   <script src="./src/js/components/EducationHub.js"></script>
   <script src="./src/js/app.js"></script>
+
+  <!-- Main SOS Crisis Modal -->
+  <div id="sos-modal-overlay" class="sos-modal-overlay hidden" style="z-index: 3000; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(10px); padding: 1.5rem;">
+    <div class="sos-modal-container" style="background: var(--bg-card); border-radius: 20px; padding: 2rem 1.5rem; width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--accent-blue); box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+      <h2 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-primary);">You are safe.</h2>
+      <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 2rem;">Take a slow, deep breath. We are here to help you through this urge.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <button id="sos-calm-audio-btn" style="background: var(--accent-emerald); color: var(--bg-dark); border: none; padding: 1rem; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg> Play Calming Audio
+        </button>
+        
+        <button id="broadcast-contacts-btn" style="background: rgba(255,255,255,0.1); color: var(--text-primary); border: 1px solid var(--border-color); padding: 1rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path><path d="M4 2C2.8 3.7 2 5.7 2 8"></path><path d="M22 8c0-2.3-.8-4.3-2-6"></path></svg> Alert Caregiver
+        </button>
+        
+        <button id="sos-open-narcan-btn" style="background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.4); padding: 1rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"></path></svg> View Narcan Guide
+        </button>
+
+        <a href="https://www.google.com/maps/search/Naloxone+near+me/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.4); padding: 1rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg> Find Naloxone Near Me
+        </a>
+      </div>
+
+      <button id="close-sos-modal-btn" style="margin-top: 2rem; background: transparent; border: none; color: var(--text-muted); font-size: 1rem; cursor: pointer; text-decoration: underline;">
+        I'm okay, close this
+      </button>
+    </div>
+  </div>
 
   <!-- India Help Modal Popup -->
   <div id="india-help-modal" class="sos-modal-overlay hidden" style="z-index: 2000; align-items: flex-start; padding-top: 2rem;">
@@ -379,6 +452,11 @@
       if(trigger && modal && closeBtn) {
         trigger.addEventListener('click', () => modal.classList.remove('hidden'));
         closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+      }
+      
+      // Initialize Lucide Icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
       }
     });
   </script>

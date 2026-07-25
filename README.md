@@ -29,7 +29,7 @@ NudgeFlow is a multi-modal, GenAI-powered Progressive Web App (PWA) designed to 
 
 - **Human-in-the-Loop Escalation:** Crisis detection mechanisms always surface a human escalation path (e.g., 988 or 14446). The AI is strictly programmed never to attempt to "handle" a genuine emergency alone.
 - **No AI Medical Prescriptions:** Zero AI-generated dosage, tapering, or drug-use instructions, regardless of the prompt framing.
-- **Privacy by Design:** Architected with principles supporting 42 CFR Part 2 and HIPAA compliance. Features explicit consent flows and an anonymous/guest mode for prevention-side users.
+- **Privacy by Design:** Architected with principles supporting 42 CFR Part 2 and HIPAA compliance. Features explicit consent flows and completely localized data storage.
 - **Clinical Oversight:** All educational corpora are clinically reviewed before being indexed into the RAG system.
 - **Stigma-Aware Language:** Non-judgmental, person-first language guidelines are rigidly enforced at the prompt-template level, ensuring the model's responses are always respectful and supportive.
 

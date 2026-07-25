@@ -7,24 +7,26 @@ class PeerSupport {
     this.initEvents();
   }
 
-  initEvents() {
-    this.renderPosts();
+  async initEvents() {
+    await this.renderPosts();
 
     const postBtn = document.getElementById('submit-peer-post-btn');
+    const postInput = document.getElementById('peer-post-input');
+
     if (postBtn) {
-      postBtn.addEventListener('click', () => {
+      postBtn.addEventListener('click', async () => {
         const input = document.getElementById('peer-post-input');
         if (input && input.value.trim().length > 0) {
-          window.storageManager.addPeerPost(input.value.trim());
+          await window.storageManager.addPeerPost(input.value.trim());
           input.value = '';
-          this.renderPosts();
+          await this.renderPosts();
         }
       });
     }
   }
 
-  renderPosts() {
-    const posts = window.storageManager.getPeerPosts();
+  async renderPosts() {
+    const posts = await window.storageManager.getPeerPosts();
     const container = document.getElementById('peer-posts-list');
     if (!container) return;
 
@@ -50,9 +52,9 @@ class PeerSupport {
     `).join('');
   }
 
-  like(id) {
-    window.storageManager.likePost(id);
-    this.renderPosts();
+  async like(id) {
+    await window.storageManager.likePost(id);
+    await this.renderPosts();
   }
 }
 

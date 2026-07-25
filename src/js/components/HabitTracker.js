@@ -7,12 +7,12 @@ class HabitTracker {
     this.initUI();
   }
 
-  initUI() {
-    this.renderHabits();
+  async initUI() {
+    await this.renderHabits();
   }
 
-  renderHabits() {
-    const habits = window.storageManager.getHabits();
+  async renderHabits() {
+    const habits = await window.storageManager.getHabits();
     const container = document.getElementById('habits-list-container');
     if (!container) return;
 
@@ -34,16 +34,16 @@ class HabitTracker {
     `).join('');
   }
 
-  toggle(id) {
-    window.storageManager.toggleHabit(id);
-    this.renderHabits();
+  async toggle(id) {
+    await window.storageManager.toggleHabit(id);
+    await this.renderHabits();
     window.audioFxEngine.playChimeTone(659, 0.4);
   }
 
-  addNewHabit(title, category) {
+  async addNewHabit(title, category) {
     if (!title || !title.trim()) return;
-    window.storageManager.addHabit(title.trim(), category);
-    this.renderHabits();
+    await window.storageManager.addHabit(title.trim(), category);
+    await this.renderHabits();
   }
 }
 

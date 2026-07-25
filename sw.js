@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anchor-pwa-v1';
+const CACHE_NAME = 'anchor-pwa-v23';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -9,15 +9,21 @@ const ASSETS_TO_CACHE = [
   './src/js/utils/storage.js',
   './src/js/utils/audio-fx.js',
   './src/js/ai/genai-engine.js',
+  './src/js/ai/genai-engine-v2.js',
   './src/js/ai/voice-engine.js',
   './src/js/ai/crisis-ai.js',
   './src/js/components/ZeroTypingWheel.js',
   './src/js/components/BreathingCircle.js',
+  './src/js/components/BurnoutCheck.js',
   './src/js/components/EmergencySOS.js',
   './src/js/components/VoiceJournal.js',
   './src/js/components/SafetyCheckin.js',
   './src/js/components/CaregiverCoach.js',
   './src/js/components/EducationHub.js',
+  './src/js/components/SobrietyTracker.js',
+  './src/js/components/PeerSupport.js',
+  './src/js/components/HabitTracker.js',
+  './src/js/components/IndiaDirectory.js',
   './src/js/app.js'
 ];
 
@@ -49,15 +55,25 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(() => {
-        if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('./index.html');
-        }
-      });
-    })
+    fetch(event.request)
+      .then(networkResponse => {
+        // Cache the new response for future use
+        const responseClone = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+        return networkResponse;
+      })
+      .catch(() => {
+        // Fallback to cache if offline
+        return caches.match(event.request).then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          if (event.request.headers.get('accept').includes('text/html')) {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });

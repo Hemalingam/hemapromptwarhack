@@ -21,7 +21,7 @@ class VoiceJournal {
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener('click', async () => {
         if (!textInput || !textInput.value.trim()) return;
         const text = textInput.value.trim();
 
@@ -37,22 +37,22 @@ class VoiceJournal {
           advice = 'Celebrate this victory! Sharing your progress in Peer Support can inspire others today.';
         }
 
-        window.storageManager.addJournalEntry({
+        await window.storageManager.addJournalEntry({
           text,
           sentiment,
           advice
         });
 
         textInput.value = '';
-        this.renderJournalEntries();
+        await this.renderJournalEntries();
       });
     }
 
     this.renderJournalEntries();
   }
 
-  renderJournalEntries() {
-    const entries = window.storageManager.getJournalEntries();
+  async renderJournalEntries() {
+    const entries = await window.storageManager.getJournalEntries();
     const container = document.getElementById('journal-entries-list');
     if (!container) return;
 

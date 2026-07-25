@@ -7,12 +7,12 @@ class SobrietyTracker {
     this.initUI();
   }
 
-  initUI() {
-    this.renderSobrietyCard();
+  async initUI() {
+    await this.renderSobrietyCard();
   }
 
-  renderSobrietyCard() {
-    const stats = window.storageManager.getSobrietyStats();
+  async renderSobrietyCard() {
+    const stats = await window.storageManager.getSobrietyStats();
     const container = document.getElementById('sobriety-tracker-container');
     if (!container) return;
 
@@ -54,12 +54,12 @@ class SobrietyTracker {
     }
   }
 
-  openEditModal() {
-    const profile = window.storageManager.getProfile();
+  async openEditModal() {
+    const profile = await window.storageManager.getProfile();
     const newDaily = prompt('Enter your estimated daily spend on substances (in ₹ or currency):', profile.dailyExpense);
     if (newDaily !== null && !isNaN(parseFloat(newDaily))) {
-      window.storageManager.updateProfile({ dailyExpense: parseFloat(newDaily) });
-      this.renderSobrietyCard();
+      await window.storageManager.updateProfile({ dailyExpense: parseFloat(newDaily) });
+      await this.renderSobrietyCard();
     }
   }
 }

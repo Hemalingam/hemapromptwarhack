@@ -84,7 +84,7 @@ class GenAIEngine {
 
     const payload = {
       system_instruction: {
-        parts: { text: this.systemGuardrails + `\n\nClinical Corpus for Grounding:\n` + JSON.stringify(VETTED_CLINICAL_CORPUS) }
+        parts: [{ text: this.systemGuardrails + `\n\nClinical Corpus for Grounding:\n` + JSON.stringify(VETTED_CLINICAL_CORPUS) }]
       },
       contents: [{
         parts: [{ text: query }]
@@ -111,7 +111,8 @@ class GenAIEngine {
       
       if (data.error) {
         console.error("Gemini API Error:", data.error.message);
-        apiFailed = true; // Fallback to mock
+        apiFailed = true; 
+        return `🚨 **[API DEBUG ERROR]** Google Server says: ${data.error.message}`;
       } else if (data.candidates && data.candidates[0].content.parts[0].text) {
         let rawText = data.candidates[0].content.parts[0].text.trim();
         
@@ -127,10 +128,12 @@ class GenAIEngine {
         return rawText;
       } else {
          apiFailed = true;
+         return `🚨 **[API DEBUG ERROR]** Unknown response structure from Gemini.`;
       }
     } catch (e) {
       console.error("Network Error connecting to Gemini:", e);
       apiFailed = true;
+      return `🚨 **[NETWORK DEBUG ERROR]** Browser blocked request or disconnected. Details: ${e.message}`;
     }
 
     // --- FALLBACK MOCK ENGINE (Runs if Live API fails due to invalid key) ---

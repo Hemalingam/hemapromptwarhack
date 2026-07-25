@@ -1,0 +1,25 @@
+{
+  "name": "hemapromptwarhack",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <img src=\"https://github.com/Hemalingam/hemapromptwarhack/blob/main/Gemini_Generated_Image_mooc8amooc8amooc.png\" alt=\"NudgeFlow App Icon\" width=\"200\"/> </p>",
+  "main": "sw.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hemalingam/hemapromptwarhack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Hemalingam/hemapromptwarhack/issues"
+  },
+  "homepage": "https://github.com/Hemalingam/hemapromptwarhack#readme",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}
